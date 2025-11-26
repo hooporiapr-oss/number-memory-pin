@@ -20,14 +20,14 @@
         }
 
         .title {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
             background: linear-gradient(135deg, #ffd700, #ff8c00, #8a2be2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-align: center;
         }
 
@@ -46,11 +46,24 @@
             border-radius: 20px;
             padding: 40px;
             width: 100%;
-            max-width: 700px;
+            max-width: 500px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
         }
 
         .hidden { display: none !important; }
+
+        .trials-banner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            z-index: 1000;
+        }
 
         .back-home {
             position: fixed;
@@ -63,877 +76,750 @@
             color: #ffd700;
             text-decoration: none;
             font-size: 0.9em;
-            transition: all 0.3s ease;
             z-index: 1000;
+            transition: all 0.3s;
         }
 
-        .back-home:hover {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: #ffd700;
-        }
+        .back-home:hover { background: rgba(255, 215, 0, 0.2); border-color: #ffd700; }
 
-        /* ==================== PIN ENTRY STYLES ==================== */
-        .pin-title {
-            color: #ffd700;
-            font-size: 1.5em;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .pin-subtitle {
-            color: #b8b8cc;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 0.95em;
-        }
-
-        .pin-dots {
+        /* REDIRECT POPUP */
+        .redirect-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .pin-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            background: transparent;
-            transition: all 0.2s ease;
-        }
-
-        .pin-dot.filled {
-            background: #ffd700;
-            border-color: #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .pin-keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            max-width: 280px;
-            margin: 0 auto 20px;
-        }
-
-        .pin-key {
-            aspect-ratio: 1/1;
-            font-size: 1.8em;
-            font-family: 'Georgia', serif;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            color: #e8e8f0;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: flex;
             align-items: center;
-            justify-content: center;
+            z-index: 5000;
+            padding: 20px;
         }
 
-        .pin-key:hover {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: rgba(255, 215, 0, 0.5);
+        .redirect-popup {
+            background: linear-gradient(135deg, #1a1034 0%, #2d1b4e 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
         }
 
-        .pin-key:active {
-            transform: scale(0.95);
-            background: rgba(255, 215, 0, 0.2);
-        }
+        .redirect-emoji { font-size: 3em; margin-bottom: 15px; }
+        .redirect-title { color: #e8e8f0; font-size: 1.25em; margin-bottom: 8px; }
+        .redirect-subtitle { color: #a0a0b8; font-size: 0.9em; margin-bottom: 25px; }
+        .redirect-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); margin: 20px 0; }
+        .redirect-home-btn { display: block; width: 100%; padding: 15px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; color: #e8e8f0; text-decoration: none; margin-bottom: 10px; font-family: 'Georgia', serif; }
+        .redirect-home-text { color: #888; font-size: 0.85em; margin-bottom: 20px; }
+        .redirect-or { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: #555; font-size: 0.85em; }
+        .redirect-or::before, .redirect-or::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+        .redirect-pro-btn { width: 100%; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a1034; border: none; padding: 15px; border-radius: 25px; font-weight: bold; cursor: pointer; font-family: 'Georgia', serif; }
 
+        /* PIN STYLES */
+        .pin-title { color: #ffd700; font-size: 1.5em; text-align: center; margin-bottom: 10px; }
+        .pin-subtitle { color: #b8b8cc; text-align: center; margin-bottom: 30px; }
+        .pin-dots { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .pin-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(212,175,55,0.5); transition: all 0.2s; }
+        .pin-dot.filled { background: #ffd700; border-color: #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+        .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 280px; margin: 0 auto 20px; }
+        .pin-key { aspect-ratio: 1; font-size: 1.8em; border: 2px solid rgba(212,175,55,0.3); background: rgba(255,255,255,0.05); color: #e8e8f0; border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Georgia', serif; transition: all 0.15s; }
+        .pin-key:hover { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.5); }
+        .pin-key:active { transform: scale(0.95); background: rgba(255,215,0,0.2); }
         .pin-key.delete { font-size: 1.2em; }
         .pin-key.empty { visibility: hidden; }
-
-        .pin-message {
-            text-align: center;
-            min-height: 24px;
-            margin-top: 15px;
-            font-size: 0.95em;
-        }
-
+        .pin-message { text-align: center; min-height: 24px; margin-top: 15px; }
         .pin-message.error { color: #ff6b6b; }
         .pin-message.success { color: #4ecdc4; }
+        .pin-toggle { text-align: center; margin-top: 25px; color: #b8b8cc; }
+        .pin-toggle-link { color: #ffd700; cursor: pointer; text-decoration: underline; }
 
-        .pin-toggle {
-            text-align: center;
-            margin-top: 25px;
-            color: #b8b8cc;
-        }
-
-        .pin-toggle-link {
-            color: #ffd700;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        /* ==================== GAME STYLES ==================== */
+        /* BUTTONS */
         .button {
             width: 100%;
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             color: #1a1034;
             border: none;
-            padding: 15px;
+            padding: 18px;
             border-radius: 30px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
             font-family: 'Georgia', serif;
             margin-top: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         .button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6); }
-        .button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .button.secondary { background: linear-gradient(135deg, #8a2be2, #4b0082); color: #fff; }
 
+        /* DASHBOARD */
         .welcome-box {
             background: rgba(255, 215, 0, 0.1);
             border: 2px solid rgba(255, 215, 0, 0.3);
             border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
             text-align: center;
         }
-        .welcome-box h3 { color: #ffd700; margin-bottom: 5px; }
+        .welcome-box h3 { color: #ffd700; margin-bottom: 8px; font-size: 1.4em; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 25px 0; }
         .stat-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
-        .stat-value { font-size: 2em; color: #ffd700; font-weight: bold; }
-        .stat-label { color: #b8b8cc; font-size: 0.85em; margin-top: 5px; }
+        .stat-value { font-size: 2.2em; color: #ffd700; font-weight: bold; }
+        .stat-label { color: #b8b8cc; font-size: 0.9em; margin-top: 5px; }
 
-        .user-bar { text-align: center; margin-bottom: 20px; color: #d4af37; }
-        .user-bar strong { color: #ffd700; }
-
-        .mode-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
-        .mode-btn {
+        /* GAME SCREEN */
+        .game-header {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 15px;
-            color: #d4af37;
-            cursor: pointer;
-            font-family: 'Georgia', serif;
-            transition: all 0.3s ease;
-            text-align: center;
         }
-        .mode-btn:hover { border-color: #ffd700; transform: translateY(-2px); }
-        .mode-btn.active { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a1034; border-color: #ffd700; }
-        .mode-btn h4 { font-size: 1.3em; margin-bottom: 8px; }
-        .mode-btn p { font-size: 0.9em; opacity: 0.8; }
 
-        .game-info { display: flex; justify-content: space-around; margin: 20px 0; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; }
-        .info-item { text-align: center; }
-        .info-value { font-size: 1.8em; color: #ffd700; font-weight: bold; }
-        .info-label { color: #b8b8cc; font-size: 0.85em; margin-top: 5px; }
+        .game-stat { text-align: center; }
+        .game-stat-value { font-size: 2.8em; color: #ffd700; font-weight: bold; line-height: 1; }
+        .game-stat-label { color: #b8b8cc; font-size: 0.9em; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* NUMBER DISPLAY AREA */
         .display-area {
-            min-height: 300px;
-            background: rgba(255, 255, 255, 0.05);
+            min-height: 200px;
+            background: rgba(0, 0, 0, 0.3);
             border: 3px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 20px 0;
-            padding: 40px;
-            transition: all 0.3s ease;
-        }
-        .display-area.showing {
-            background: linear-gradient(135deg, #1a1a3e, #2d1b4e);
-            border-color: #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            margin-bottom: 25px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .number-display {
-            font-size: 6em;
-            color: #ffd700;
+        .number-show {
+            font-size: 4em;
             font-weight: bold;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            color: #ffd700;
+            letter-spacing: 12px;
             font-family: 'Courier New', monospace;
-            letter-spacing: 15px;
-            animation: fadeIn 0.3s ease;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: numberPulse 0.5s ease;
         }
 
-        @keyframes fadeIn {
+        @keyframes numberPulse {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .status-text {
+            font-size: 1.5em;
+            color: #d4af37;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .status-subtext {
+            font-size: 1em;
+            color: #b8b8cc;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .status-text.memorize { color: #ffd700; }
+        .status-text.input { color: #51cf66; }
+        .status-text.correct { color: #51cf66; }
+        .status-text.wrong { color: #ff6b6b; }
+
+        /* COUNTDOWN */
+        .countdown {
+            font-size: 1.2em;
+            color: #b8b8cc;
+            margin-top: 15px;
+        }
+
+        .countdown-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .countdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        /* INPUT AREA */
+        .input-area {
+            margin-bottom: 20px;
+        }
+
+        .number-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 2em;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            color: #ffd700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 8px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .number-input:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .number-input::placeholder {
+            color: rgba(255, 215, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        /* ON-SCREEN KEYPAD FOR SENIORS */
+        .game-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 320px;
+            margin: 20px auto;
+        }
+
+        .game-key {
+            aspect-ratio: 1.3;
+            font-size: 2em;
+            font-weight: bold;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: #e8e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: all 0.15s;
+        }
+
+        .game-key:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .game-key:active {
+            transform: scale(0.95);
+            background: rgba(255, 215, 0, 0.25);
+        }
+
+        .game-key.delete {
+            font-size: 1.3em;
+        }
+
+        .game-key.submit {
+            background: linear-gradient(135deg, #51cf66, #2ecc71);
+            border-color: #51cf66;
+            color: #fff;
+        }
+
+        .game-key.submit:hover {
+            box-shadow: 0 0 20px rgba(81, 207, 102, 0.5);
+        }
+
+        /* RESULTS */
+        .results-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .results-card {
+            background: linear-gradient(135deg, #1a1034, #2d1b4e);
+            border: 3px solid #ffd700;
+            border-radius: 25px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
             from { opacity: 0; transform: scale(0.8); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        .message-text { font-size: 1.5em; color: #d4af37; text-align: center; line-height: 1.6; }
-        .input-area { text-align: center; width: 100%; }
+        .results-icon { font-size: 4em; margin-bottom: 15px; }
+        .results-title { font-size: 1.8em; color: #ffd700; margin-bottom: 10px; }
+        .results-digits { font-size: 5em; color: #ffd700; font-weight: bold; line-height: 1; margin: 20px 0; text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+        .results-subtitle { font-size: 1.2em; color: #b8b8cc; margin-bottom: 25px; }
+        .results-record { background: rgba(255, 215, 0, 0.2); border: 2px solid #ffd700; border-radius: 10px; padding: 12px; margin: 20px 0; color: #ffd700; font-weight: bold; font-size: 1.1em; }
+        .results-rating { font-size: 1.3em; color: #d4af37; margin-bottom: 25px; }
 
-        .number-input {
-            font-size: 2.5em;
-            padding: 12px 15px;
-            border-radius: 15px;
-            border: 3px solid rgba(212, 175, 55, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffd700;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            letter-spacing: 8px;
-            width: 100%;
-            max-width: 100%;
-            margin-bottom: 15px;
-        }
-        .number-input:focus { outline: none; border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .key-btn {
-            height: 60px;
-            font-size: 1.6em;
-            background: rgba(255, 255, 255, 0.08);
-            border: 2px solid rgba(212, 175, 55, 0.4);
-            border-radius: 12px;
-            color: #ffd700;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            transition: all 0.15s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-
-        .key-btn:hover { background: rgba(255, 215, 0, 0.15); border-color: #ffd700; }
-        .key-btn:active { transform: scale(0.95); background: rgba(255, 215, 0, 0.25); }
-
-        .key-btn.action-btn {
-            font-size: 0.9em;
-            font-family: 'Georgia', serif;
-            letter-spacing: 0;
-        }
-
-        .key-btn.submit-btn {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #1a1034;
-            border-color: #ffd700;
-            font-size: 1.8em;
-        }
-        .key-btn.submit-btn:active { background: linear-gradient(135deg, #ffed4a, #ffa500); }
-
-        .results-box {
-            background: rgba(10, 14, 39, 0.95);
-            border: 3px solid #ffd700;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .results-box h3 { color: #ffd700; font-size: 2em; margin-bottom: 20px; }
-        .result-value { font-size: 4em; color: #ffd700; font-weight: bold; text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); margin: 20px 0; }
-        .result-message { font-size: 1.2em; color: #c4c4d8; margin: 15px 0; }
-        .new-record { background: rgba(255, 215, 0, 0.2); border: 2px solid #ffd700; border-radius: 10px; padding: 15px; margin: 20px 0; font-size: 1.3em; color: #ffd700; font-weight: bold; }
-
+        /* INSTRUCTIONS */
         .instructions {
             background: rgba(138, 43, 226, 0.1);
             border: 2px solid rgba(138, 43, 226, 0.3);
             border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 15px;
+            margin-top: 15px;
         }
-        .instructions h4 { color: #8a2be2; margin-bottom: 10px; text-align: center; }
-        .instructions p { color: #c4c4d4; line-height: 1.6; text-align: center; }
+        .instructions h4 { color: #8a2be2; margin-bottom: 8px; text-align: center; font-size: 1em; }
+        .instructions p { color: #c4c4d4; line-height: 1.5; text-align: center; font-size: 0.9em; }
 
         @media (max-width: 768px) {
             .title { font-size: 2em; }
-            .container { padding: 20px 15px; }
-            .number-display { font-size: 4em; letter-spacing: 10px; }
-            .mode-selector { grid-template-columns: 1fr; }
+            .container { padding: 25px 20px; }
+            .trials-banner { top: 10px; right: 10px; font-size: 0.9em; padding: 10px 15px; }
             .back-home { position: relative; top: auto; left: auto; display: inline-block; margin-bottom: 20px; }
-            .display-area { min-height: auto; padding: 25px 15px; margin: 15px 0; }
-            .number-input { font-size: 2em; padding: 10px; letter-spacing: 6px; margin-bottom: 12px; }
-            .message-text { font-size: 1.2em; margin-bottom: 12px; }
-            .keypad { gap: 8px; max-width: 280px; }
-            .key-btn { height: 55px; font-size: 1.5em; }
+            .number-show { font-size: 3em; letter-spacing: 8px; }
+            .number-input { font-size: 1.5em; padding: 15px; letter-spacing: 5px; }
+            .game-stat-value { font-size: 2.2em; }
+            .game-keypad { max-width: 280px; }
+            .game-key { font-size: 1.6em; }
             .pin-keypad { max-width: 240px; }
             .pin-key { font-size: 1.5em; }
         }
 
         @media (max-width: 400px) {
-            .container { padding: 15px 12px; }
-            .number-input { font-size: 1.7em; padding: 8px; letter-spacing: 5px; margin-bottom: 10px; }
-            .keypad { gap: 6px; max-width: 260px; }
-            .key-btn { height: 50px; font-size: 1.4em; border-radius: 10px; }
-            .key-btn.action-btn { font-size: 0.8em; }
-            .message-text { font-size: 1.1em; margin-bottom: 10px; }
-            .game-info { padding: 12px; margin: 12px 0; }
-            .info-value { font-size: 1.5em; }
-            .info-label { font-size: 0.75em; }
-            .pin-keypad { max-width: 200px; gap: 8px; }
-            .pin-key { font-size: 1.3em; }
-        }
-
-        @media (max-width: 350px) {
-            .keypad { gap: 5px; max-width: 240px; }
-            .key-btn { height: 45px; font-size: 1.3em; }
-            .number-input { font-size: 1.5em; letter-spacing: 4px; }
+            .number-show { font-size: 2.5em; letter-spacing: 6px; }
+            .game-header { gap: 25px; padding: 15px; }
+            .game-stat-value { font-size: 1.8em; }
+            .game-keypad { max-width: 240px; gap: 8px; }
+            .game-key { font-size: 1.4em; }
         }
     </style>
 </head>
 <body>
     <a href="https://hooporiapr-oss.github.io/akashic-works/" class="back-home">← Back to Home</a>
     
-    <div class="title">🔢 Akashic Number Memory</div>
-    <div class="subtitle">Test Your Digit Span</div>
+    <div class="title">🔢 Akashic Numbers</div>
+    <div class="subtitle">Remember the Digits</div>
 
-    <!-- PIN LOGIN SCREEN -->
+    <!-- PIN LOGIN -->
     <div class="container" id="pinLoginScreen">
         <div class="pin-title">Enter PIN</div>
         <div class="pin-subtitle">Enter your 4-digit PIN to play</div>
-        
-        <div class="pin-dots">
-            <div class="pin-dot" id="dot1"></div>
-            <div class="pin-dot" id="dot2"></div>
-            <div class="pin-dot" id="dot3"></div>
-            <div class="pin-dot" id="dot4"></div>
-        </div>
-        
+        <div class="pin-dots"><div class="pin-dot" id="dot1"></div><div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div><div class="pin-dot" id="dot4"></div></div>
         <div class="pin-keypad">
-            <button class="pin-key" data-num="1">1</button>
-            <button class="pin-key" data-num="2">2</button>
-            <button class="pin-key" data-num="3">3</button>
-            <button class="pin-key" data-num="4">4</button>
-            <button class="pin-key" data-num="5">5</button>
-            <button class="pin-key" data-num="6">6</button>
-            <button class="pin-key" data-num="7">7</button>
-            <button class="pin-key" data-num="8">8</button>
-            <button class="pin-key" data-num="9">9</button>
-            <button class="pin-key empty"></button>
-            <button class="pin-key" data-num="0">0</button>
-            <button class="pin-key delete">⌫</button>
+            <button class="pin-key" data-num="1">1</button><button class="pin-key" data-num="2">2</button><button class="pin-key" data-num="3">3</button>
+            <button class="pin-key" data-num="4">4</button><button class="pin-key" data-num="5">5</button><button class="pin-key" data-num="6">6</button>
+            <button class="pin-key" data-num="7">7</button><button class="pin-key" data-num="8">8</button><button class="pin-key" data-num="9">9</button>
+            <button class="pin-key empty"></button><button class="pin-key" data-num="0">0</button><button class="pin-key delete">⌫</button>
         </div>
-        
         <div class="pin-message" id="pinMessage"></div>
-        
-        <div class="pin-toggle">
-            No account? <span class="pin-toggle-link" id="showCreatePin">Create PIN</span>
-        </div>
+        <div class="pin-toggle">No account? <span class="pin-toggle-link" id="showCreatePin">Create PIN</span></div>
     </div>
 
-    <!-- PIN CREATE SCREEN -->
+    <!-- PIN CREATE -->
     <div class="container hidden" id="pinCreateScreen">
         <div class="pin-title" id="createPinTitle">Create PIN</div>
         <div class="pin-subtitle" id="createPinSubtitle">Choose a 4-digit PIN</div>
-        
-        <div class="pin-dots">
-            <div class="pin-dot" id="createDot1"></div>
-            <div class="pin-dot" id="createDot2"></div>
-            <div class="pin-dot" id="createDot3"></div>
-            <div class="pin-dot" id="createDot4"></div>
+        <div class="pin-dots"><div class="pin-dot" id="createDot1"></div><div class="pin-dot" id="createDot2"></div><div class="pin-dot" id="createDot3"></div><div class="pin-dot" id="createDot4"></div></div>
+        <div class="pin-keypad">
+            <button class="pin-key" data-num="1">1</button><button class="pin-key" data-num="2">2</button><button class="pin-key" data-num="3">3</button>
+            <button class="pin-key" data-num="4">4</button><button class="pin-key" data-num="5">5</button><button class="pin-key" data-num="6">6</button>
+            <button class="pin-key" data-num="7">7</button><button class="pin-key" data-num="8">8</button><button class="pin-key" data-num="9">9</button>
+            <button class="pin-key empty"></button><button class="pin-key" data-num="0">0</button><button class="pin-key delete">⌫</button>
         </div>
-        
-        <div class="pin-keypad" id="createKeypad">
-            <button class="pin-key" data-num="1">1</button>
-            <button class="pin-key" data-num="2">2</button>
-            <button class="pin-key" data-num="3">3</button>
-            <button class="pin-key" data-num="4">4</button>
-            <button class="pin-key" data-num="5">5</button>
-            <button class="pin-key" data-num="6">6</button>
-            <button class="pin-key" data-num="7">7</button>
-            <button class="pin-key" data-num="8">8</button>
-            <button class="pin-key" data-num="9">9</button>
-            <button class="pin-key empty"></button>
-            <button class="pin-key" data-num="0">0</button>
-            <button class="pin-key delete">⌫</button>
-        </div>
-        
         <div class="pin-message" id="createPinMessage"></div>
-        
-        <div class="pin-toggle">
-            Already have a PIN? <span class="pin-toggle-link" id="showLoginPin">Login</span>
-        </div>
+        <div class="pin-toggle">Already have a PIN? <span class="pin-toggle-link" id="showLoginPin">Login</span></div>
     </div>
 
-    <!-- DASHBOARD SCREEN -->
+    <!-- DASHBOARD -->
     <div class="container hidden" id="dashboardScreen">
         <div class="welcome-box">
             <h3>Welcome Back! 🔢</h3>
-            <p style="color: #b8b8cc; margin-top: 5px;">Ready to test your memory?</p>
+            <p style="color: #b8b8cc;">How many digits can you remember?</p>
         </div>
         <div class="stats-grid">
-            <div class="stat-box"><div class="stat-value" id="dashAttempts">0</div><div class="stat-label">Total Attempts</div></div>
-            <div class="stat-box"><div class="stat-value" id="dashLongest">0</div><div class="stat-label">Longest Sequence</div></div>
-            <div class="stat-box"><div class="stat-value" id="dashAccuracy">0%</div><div class="stat-label">Accuracy</div></div>
+            <div class="stat-box"><div class="stat-value" id="dashGames">0</div><div class="stat-label">Games</div></div>
+            <div class="stat-box"><div class="stat-value" id="dashBest">0</div><div class="stat-label">Best Digits</div></div>
+            <div class="stat-box"><div class="stat-value" id="dashAvg">0</div><div class="stat-label">Average</div></div>
             <div class="stat-box"><div class="stat-value" id="dashRating">--</div><div class="stat-label">Rating</div></div>
         </div>
-        <button class="button" id="startPlayingBtn">🔢 Start Testing</button>
+        <button class="button" id="startPlayingBtn">🔢 Start Game</button>
         <button class="button secondary" id="dashLogoutBtn">Logout</button>
     </div>
 
     <!-- GAME SCREEN -->
     <div class="container hidden" id="gameScreen">
-        <div class="user-bar">
-            <button class="button secondary" id="gameLogoutBtn" style="display: inline-block; width: auto; padding: 6px 18px; font-size: 0.9em;">Back to Menu</button>
+        <div class="game-header">
+            <div class="game-stat"><div class="game-stat-value" id="levelDisplay">1</div><div class="game-stat-label">Level</div></div>
+            <div class="game-stat"><div class="game-stat-value" id="digitsDisplay">3</div><div class="game-stat-label">Digits</div></div>
         </div>
-        <div class="mode-selector">
-            <div class="mode-btn active" data-mode="progressive"><h4>📈 Progressive</h4><p>Starts at 3 digits, increases each round</p></div>
-            <div class="mode-btn" data-mode="timed"><h4>⏱️ Speed Round</h4><p>5 rounds, random lengths, race the clock</p></div>
+
+        <div class="display-area" id="displayArea">
+            <div class="status-text" id="statusText">Get Ready...</div>
+            <div class="status-subtext" id="statusSubtext">The number will appear shortly</div>
         </div>
-        <div class="game-info">
-            <div class="info-item"><div class="info-value" id="currentLevel">3</div><div class="info-label">Current Length</div></div>
-            <div class="info-item"><div class="info-value" id="roundDisplay">0</div><div class="info-label">Round</div></div>
-            <div class="info-item"><div class="info-value" id="scoreDisplay">0</div><div class="info-label">Score</div></div>
+
+        <div class="input-area hidden" id="inputArea">
+            <input type="text" class="number-input" id="numberInput" placeholder="Enter number" readonly>
+            <div class="game-keypad" id="gameKeypad">
+                <button class="game-key" data-num="1">1</button>
+                <button class="game-key" data-num="2">2</button>
+                <button class="game-key" data-num="3">3</button>
+                <button class="game-key" data-num="4">4</button>
+                <button class="game-key" data-num="5">5</button>
+                <button class="game-key" data-num="6">6</button>
+                <button class="game-key" data-num="7">7</button>
+                <button class="game-key" data-num="8">8</button>
+                <button class="game-key" data-num="9">9</button>
+                <button class="game-key delete">⌫</button>
+                <button class="game-key" data-num="0">0</button>
+                <button class="game-key submit">✓</button>
+            </div>
         </div>
-        <div class="display-area" id="displayArea"><div class="message-text">Click "Start Game" to begin!</div></div>
-        <button class="button" id="startGameBtn">Start Game</button>
-        <div class="results-box hidden" id="resultsBox"></div>
+
+        <button class="button secondary" id="gameBackBtn">← Back to Menu</button>
+
         <div class="instructions">
             <h4>How to Play</h4>
-            <p><strong>Progressive Mode:</strong> Start with 3 digits. Each correct answer adds 1 digit!<br><strong>Speed Round:</strong> Complete 5 rounds of random lengths as fast as possible!<br><br>Watch the numbers carefully, then type them back in the correct order!</p>
+            <p>Memorize the number shown, then type it back. Each level adds one more digit to remember!</p>
+        </div>
+    </div>
+
+    <!-- RESULTS OVERLAY -->
+    <div class="results-overlay hidden" id="resultsOverlay">
+        <div class="results-card">
+            <div class="results-icon" id="resultsIcon">🔢</div>
+            <div class="results-title">Game Over</div>
+            <div class="results-digits" id="resultsDigits">0</div>
+            <div class="results-subtitle">Digits Remembered</div>
+            <div class="results-record hidden" id="resultsRecord">🏆 New Personal Record!</div>
+            <div class="results-rating" id="resultsRating">Rating: --</div>
+            <button class="button" id="playAgainBtn">🔄 Play Again</button>
+            <button class="button secondary" id="resultsMenuBtn">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- REDIRECT POPUP -->
+    <div class="redirect-overlay hidden" id="redirectPopup">
+        <div class="redirect-popup">
+            <div class="redirect-emoji">⏸️</div>
+            <div class="redirect-title">Number Memory pauses here for today...</div>
+            <div class="redirect-subtitle">You've used your 3 free sessions</div>
+            <div class="redirect-divider"></div>
+            <a href="https://hooporiapr-oss.github.io/akashic-works/" class="redirect-home-btn">Return to Home</a>
+            <div class="redirect-home-text">Try other free Akashic games</div>
+            <div class="redirect-or">or</div>
+            <button class="redirect-pro-btn" onclick="upgradePro()">Unlock Unlimited Access</button>
         </div>
     </div>
 
     <script>
-        // ==================== PIN AUTH SYSTEM ====================
-        const PIN_STORAGE_KEY = 'akashic_pin_hash';
-        const PLAYER_ID_KEY = 'akashic_player_id';
-        const STATS_KEY = 'akashic_number_stats';
+        // ==================== STORAGE ====================
+        const PIN_KEY = 'akashic_num_pin', STATS_KEY = 'akashic_num_stats', TRIES_KEY = 'akashic_num_tries', FREE_TRIES = 3;
 
-        function hashPIN(pin) {
-            let hash = 0;
-            const salted = pin + 'akashic_salt_2024';
-            for (let i = 0; i < salted.length; i++) {
-                hash = ((hash << 5) - hash) + salted.charCodeAt(i);
-                hash = hash & hash;
-            }
-            return hash.toString(36);
-        }
+        function hashPIN(pin) { let h = 0; const s = pin + 'akashic2024'; for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; } return h.toString(36); }
+        function hasPIN() { return !!localStorage.getItem(PIN_KEY); }
+        function verifyPIN(pin) { return localStorage.getItem(PIN_KEY) === hashPIN(pin); }
+        function createPIN(pin) { localStorage.setItem(PIN_KEY, hashPIN(pin)); localStorage.setItem(STATS_KEY, JSON.stringify({ gamesPlayed: 0, bestDigits: 0, totalDigits: 0 })); }
+        function getStats() { const s = localStorage.getItem(STATS_KEY); return s ? JSON.parse(s) : { gamesPlayed: 0, bestDigits: 0, totalDigits: 0 }; }
+        function saveStats(s) { localStorage.setItem(STATS_KEY, JSON.stringify(s)); }
 
-        function generatePlayerId() {
-            return 'player_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
-        }
+        function getTriesData() { const d = localStorage.getItem(TRIES_KEY); if (!d) return { tries: 0, lastReset: new Date().toDateString() }; return JSON.parse(d); }
+        function saveTriesData(d) { localStorage.setItem(TRIES_KEY, JSON.stringify(d)); }
+        function canUserPlay() { let d = getTriesData(); if (d.lastReset !== new Date().toDateString()) { d.tries = 0; d.lastReset = new Date().toDateString(); } saveTriesData(d); return { canPlay: d.tries < FREE_TRIES, triesLeft: FREE_TRIES - d.tries }; }
+        function recordPlay() { let d = getTriesData(); if (d.lastReset !== new Date().toDateString()) { d.tries = 0; d.lastReset = new Date().toDateString(); } d.tries++; saveTriesData(d); updateTriesBanner(); }
+        function updateTriesBanner() { const s = canUserPlay(); document.querySelector('.trials-banner')?.remove(); const b = document.createElement('div'); b.className = 'trials-banner'; b.textContent = `🎮 ${s.triesLeft} free ${s.triesLeft === 1 ? 'try' : 'tries'} today`; document.body.appendChild(b); }
+        function showRedirectPopup() { document.getElementById('redirectPopup').classList.remove('hidden'); }
+        function upgradePro() { window.location.href = 'mailto:support@akashic.works?subject=Pro%20Upgrade'; }
 
-        function hasPIN() {
-            return !!localStorage.getItem(PIN_STORAGE_KEY);
-        }
+        // ==================== UI ====================
+        let currentPIN = '', confirmPIN = '', isConfirming = false;
+        function showScreen(id) { document.querySelectorAll('.container').forEach(el => el.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+        function updatePinDots(prefix, len) { for (let i = 1; i <= 4; i++) document.getElementById(prefix + i)?.classList.toggle('filled', i <= len); }
+        function showPinMessage(id, msg, err) { const el = document.getElementById(id); el.textContent = msg; el.className = 'pin-message ' + (err ? 'error' : 'success'); }
+        function clearPinMessage(id) { document.getElementById(id).textContent = ''; document.getElementById(id).className = 'pin-message'; }
 
-        function createPIN(pin) {
-            const playerId = generatePlayerId();
-            localStorage.setItem(PIN_STORAGE_KEY, hashPIN(pin));
-            localStorage.setItem(PLAYER_ID_KEY, playerId);
-            localStorage.setItem(STATS_KEY, JSON.stringify({
-                totalAttempts: 0,
-                longestSequence: 0,
-                correctAnswers: 0,
-                wrongAnswers: 0
-            }));
-            return true;
-        }
-
-        function verifyPIN(pin) {
-            const storedHash = localStorage.getItem(PIN_STORAGE_KEY);
-            return storedHash === hashPIN(pin);
-        }
-
-        function getStats() {
-            const stats = localStorage.getItem(STATS_KEY);
-            return stats ? JSON.parse(stats) : { totalAttempts: 0, longestSequence: 0, correctAnswers: 0, wrongAnswers: 0 };
-        }
-
-        function saveStats(stats) {
-            localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-        }
-
-        function logout() {
-            sessionStorage.removeItem('akashic_logged_in');
-        }
-
-        // ==================== UI FUNCTIONS ====================
-        let currentPIN = '';
-        let confirmPIN = '';
-        let isConfirming = false;
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-            document.getElementById(screenId).classList.remove('hidden');
-        }
-
-        function updatePinDots(prefix, length) {
-            for (let i = 1; i <= 4; i++) {
-                const dot = document.getElementById(prefix + i);
-                if (dot) {
-                    dot.classList.toggle('filled', i <= length);
-                }
-            }
-        }
-
-        function showPinMessage(elementId, message, isError = false) {
-            const el = document.getElementById(elementId);
-            el.textContent = message;
-            el.className = 'pin-message ' + (isError ? 'error' : 'success');
-        }
-
-        function clearPinMessage(elementId) {
-            const el = document.getElementById(elementId);
-            el.textContent = '';
-            el.className = 'pin-message';
-        }
-
-        // ==================== LOGIN PIN HANDLERS ====================
-        function handleLoginKeyPress(num) {
-            if (currentPIN.length < 4) {
-                currentPIN += num;
-                updatePinDots('dot', currentPIN.length);
-                
-                if (currentPIN.length === 4) {
-                    setTimeout(() => {
-                        if (verifyPIN(currentPIN)) {
-                            sessionStorage.setItem('akashic_logged_in', 'true');
-                            loadDashboard();
-                        } else {
-                            showPinMessage('pinMessage', 'Wrong PIN. Try again.', true);
-                            currentPIN = '';
-                            updatePinDots('dot', 0);
-                        }
-                    }, 200);
-                }
-            }
-        }
-
-        function handleLoginDelete() {
-            if (currentPIN.length > 0) {
-                currentPIN = currentPIN.slice(0, -1);
-                updatePinDots('dot', currentPIN.length);
-                clearPinMessage('pinMessage');
-            }
-        }
-
-        // ==================== CREATE PIN HANDLERS ====================
-        function handleCreateKeyPress(num) {
-            if (confirmPIN.length < 4) {
-                confirmPIN += num;
-                updatePinDots('createDot', confirmPIN.length);
-                
-                if (confirmPIN.length === 4) {
-                    setTimeout(() => {
-                        if (!isConfirming) {
-                            currentPIN = confirmPIN;
-                            confirmPIN = '';
-                            isConfirming = true;
-                            document.getElementById('createPinTitle').textContent = 'Confirm PIN';
-                            document.getElementById('createPinSubtitle').textContent = 'Enter your PIN again';
-                            updatePinDots('createDot', 0);
-                        } else {
-                            if (confirmPIN === currentPIN) {
-                                createPIN(currentPIN);
-                                sessionStorage.setItem('akashic_logged_in', 'true');
-                                showPinMessage('createPinMessage', 'PIN created!', false);
-                                setTimeout(() => loadDashboard(), 500);
-                            } else {
-                                showPinMessage('createPinMessage', 'PINs don\'t match. Try again.', true);
-                                currentPIN = '';
-                                confirmPIN = '';
-                                isConfirming = false;
-                                document.getElementById('createPinTitle').textContent = 'Create PIN';
-                                document.getElementById('createPinSubtitle').textContent = 'Choose a 4-digit PIN';
-                                updatePinDots('createDot', 0);
-                            }
-                        }
-                    }, 200);
-                }
-            }
-        }
-
-        function handleCreateDelete() {
-            if (confirmPIN.length > 0) {
-                confirmPIN = confirmPIN.slice(0, -1);
-                updatePinDots('createDot', confirmPIN.length);
-                clearPinMessage('createPinMessage');
-            }
-        }
+        // ==================== PIN HANDLERS ====================
+        function handleLoginKey(num) { if (currentPIN.length < 4) { currentPIN += num; updatePinDots('dot', currentPIN.length); if (currentPIN.length === 4) { setTimeout(() => { if (verifyPIN(currentPIN)) loadDashboard(); else { showPinMessage('pinMessage', 'Wrong PIN', true); currentPIN = ''; updatePinDots('dot', 0); } }, 200); } } }
+        function handleLoginDel() { if (currentPIN.length > 0) { currentPIN = currentPIN.slice(0, -1); updatePinDots('dot', currentPIN.length); clearPinMessage('pinMessage'); } }
+        function handleCreateKey(num) { if (confirmPIN.length < 4) { confirmPIN += num; updatePinDots('createDot', confirmPIN.length); if (confirmPIN.length === 4) { setTimeout(() => { if (!isConfirming) { currentPIN = confirmPIN; confirmPIN = ''; isConfirming = true; document.getElementById('createPinTitle').textContent = 'Confirm PIN'; document.getElementById('createPinSubtitle').textContent = 'Enter your PIN again'; updatePinDots('createDot', 0); } else { if (confirmPIN === currentPIN) { createPIN(currentPIN); showPinMessage('createPinMessage', 'PIN created!', false); setTimeout(() => loadDashboard(), 500); } else { showPinMessage('createPinMessage', 'PINs don\'t match', true); currentPIN = ''; confirmPIN = ''; isConfirming = false; document.getElementById('createPinTitle').textContent = 'Create PIN'; document.getElementById('createPinSubtitle').textContent = 'Choose a 4-digit PIN'; updatePinDots('createDot', 0); } } }, 200); } } }
+        function handleCreateDel() { if (confirmPIN.length > 0) { confirmPIN = confirmPIN.slice(0, -1); updatePinDots('createDot', confirmPIN.length); clearPinMessage('createPinMessage'); } }
 
         // ==================== DASHBOARD ====================
         function loadDashboard() {
             const stats = getStats();
-            document.getElementById('dashAttempts').textContent = stats.totalAttempts;
-            document.getElementById('dashLongest').textContent = stats.longestSequence;
-            const accuracy = stats.totalAttempts > 0 ? Math.round((stats.correctAnswers / stats.totalAttempts) * 100) : 0;
-            document.getElementById('dashAccuracy').textContent = accuracy + '%';
-            document.getElementById('dashRating').textContent = getRating(stats.longestSequence);
+            document.getElementById('dashGames').textContent = stats.gamesPlayed || 0;
+            document.getElementById('dashBest').textContent = stats.bestDigits || 0;
+            document.getElementById('dashAvg').textContent = stats.gamesPlayed > 0 ? Math.round(stats.totalDigits / stats.gamesPlayed) : 0;
+            document.getElementById('dashRating').textContent = getRating(stats.bestDigits);
             showScreen('dashboardScreen');
+            updateTriesBanner();
+            if (!canUserPlay().canPlay) showRedirectPopup();
         }
 
-        function getRating(longest) {
-            if (longest === 0) return '--';
-            if (longest >= 12) return '🧠 Genius';
-            if (longest >= 10) return '⭐ Master';
-            if (longest >= 8) return '🔥 Expert';
-            if (longest >= 7) return '💪 Strong';
-            if (longest >= 5) return '👍 Good';
-            return '📚 Learning';
+        function getRating(digits) {
+            if (!digits) return '--';
+            if (digits >= 12) return '🧠 Genius';
+            if (digits >= 10) return '⭐ Master';
+            if (digits >= 8) return '🔥 Expert';
+            if (digits >= 6) return '👍 Good';
+            if (digits >= 4) return '📚 Learning';
+            return '🌱 Beginner';
         }
 
         // ==================== GAME LOGIC ====================
-        let gameMode = 'progressive', currentSequence = [], currentLevel = 3, round = 0, score = 0, gameActive = false, maxRounds = 5;
+        let currentNumber = '', userInput = '', level = 1, digits = 3, gameActive = false;
 
-        function updateDisplay() {
-            document.getElementById('currentLevel').textContent = currentLevel;
-            document.getElementById('roundDisplay').textContent = round;
-            document.getElementById('scoreDisplay').textContent = score;
-        }
-
-        function generateSequence(length) {
-            const seq = [];
-            for (let i = 0; i < length; i++) seq.push(Math.floor(Math.random() * 10));
-            return seq;
-        }
-
-        async function showSequence(sequence) {
-            const displayArea = document.getElementById('displayArea');
-            displayArea.classList.add('showing');
-            for (let i = 0; i < sequence.length; i++) {
-                displayArea.innerHTML = `<div class="number-display">${sequence[i]}</div>`;
-                await sleep(800);
-                if (i < sequence.length - 1) {
-                    displayArea.innerHTML = '';
-                    await sleep(300);
-                }
+        function generateNumber(len) {
+            let n = '';
+            for (let i = 0; i < len; i++) {
+                n += Math.floor(Math.random() * 10);
             }
-            displayArea.classList.remove('showing');
+            return n;
         }
 
-        function showInputArea() {
+        function startGame() {
+            if (!canUserPlay().canPlay) { showRedirectPopup(); return; }
+            
+            gameActive = true;
+            level = 1;
+            digits = 3;
+            userInput = '';
+            
+            document.getElementById('resultsOverlay').classList.add('hidden');
+            document.getElementById('inputArea').classList.add('hidden');
+            document.getElementById('numberInput').value = '';
+            
+            updateGameDisplay();
+            showScreen('gameScreen');
+            
+            setTimeout(() => startRound(), 800);
+        }
+
+        function updateGameDisplay() {
+            document.getElementById('levelDisplay').textContent = level;
+            document.getElementById('digitsDisplay').textContent = digits;
+        }
+
+        function startRound() {
+            currentNumber = generateNumber(digits);
+            userInput = '';
+            document.getElementById('numberInput').value = '';
+            document.getElementById('inputArea').classList.add('hidden');
+            
+            // Show "Get Ready"
             const displayArea = document.getElementById('displayArea');
             displayArea.innerHTML = `
-                <div class="input-area">
-                    <div class="message-text">Enter the sequence:</div>
-                    <input type="text" class="number-input" id="userInput" maxlength="${currentLevel}" autocomplete="off" inputmode="none" readonly>
-                    <div class="keypad">
-                        <button class="key-btn" onclick="addDigit(1)">1</button>
-                        <button class="key-btn" onclick="addDigit(2)">2</button>
-                        <button class="key-btn" onclick="addDigit(3)">3</button>
-                        <button class="key-btn" onclick="addDigit(4)">4</button>
-                        <button class="key-btn" onclick="addDigit(5)">5</button>
-                        <button class="key-btn" onclick="addDigit(6)">6</button>
-                        <button class="key-btn" onclick="addDigit(7)">7</button>
-                        <button class="key-btn" onclick="addDigit(8)">8</button>
-                        <button class="key-btn" onclick="addDigit(9)">9</button>
-                        <button class="key-btn action-btn" onclick="clearInput()">Clear</button>
-                        <button class="key-btn" onclick="addDigit(0)">0</button>
-                        <button class="key-btn submit-btn" onclick="submitAnswer()">✓</button>
-                    </div>
-                </div>
+                <div class="status-text memorize">Get Ready...</div>
+                <div class="status-subtext">Memorize the ${digits}-digit number</div>
             `;
-        }
-
-        window.addDigit = function(digit) {
-            const input = document.getElementById('userInput');
-            if (input.value.length < currentLevel) input.value += digit;
-        };
-
-        window.clearInput = function() {
-            document.getElementById('userInput').value = '';
-        };
-
-        window.submitAnswer = function() {
-            const input = document.getElementById('userInput').value;
-            if (input.length !== currentLevel) {
-                alert(`Please enter exactly ${currentLevel} digits!`);
-                return;
-            }
-            checkAnswer(input);
-        };
-
-        function checkAnswer(userInput) {
-            const correct = userInput === currentSequence.join('');
-            const stats = getStats();
             
-            stats.totalAttempts++;
-            if (correct) {
-                stats.correctAnswers++;
-                score += currentLevel * 10;
-                if (currentLevel > stats.longestSequence) {
-                    stats.longestSequence = currentLevel;
-                }
-            } else {
-                stats.wrongAnswers++;
-            }
-            saveStats(stats);
-
-            if (correct) {
-                showFeedback(true);
-                if (gameMode === 'progressive') {
-                    currentLevel++;
-                    setTimeout(() => nextRound(), 1500);
-                } else {
-                    round++;
-                    if (round >= maxRounds) {
-                        setTimeout(() => endGame(true), 1500);
-                    } else {
-                        currentLevel = 3 + Math.floor(Math.random() * 5);
-                        setTimeout(() => nextRound(), 1500);
-                    }
-                }
-            } else {
-                showFeedback(false);
-                setTimeout(() => endGame(false), 2000);
-            }
-        }
-
-        function showFeedback(correct) {
-            const displayArea = document.getElementById('displayArea');
-            if (correct) {
+            setTimeout(() => {
+                // Show the number
+                const showTime = 1000 + (digits * 400); // More time for more digits
+                
                 displayArea.innerHTML = `
-                    <div style="text-align: center;">
-                        <div style="font-size: 5em; color: #51cf66;">✓</div>
-                        <div class="message-text" style="color: #51cf66;">Correct!</div>
-                        <div style="color: #ffd700; font-size: 1.5em; margin-top: 15px;">+${currentLevel * 10} points</div>
-                    </div>
+                    <div class="number-show">${currentNumber}</div>
+                    <div class="countdown-bar"><div class="countdown-fill" id="countdownFill"></div></div>
                 `;
-            } else {
-                displayArea.innerHTML = `
-                    <div style="text-align: center;">
-                        <div style="font-size: 5em; color: #ff6b6b;">✗</div>
-                        <div class="message-text" style="color: #ff6b6b;">Wrong!</div>
-                        <div style="color: #c4c4d8; margin-top: 15px;">Correct answer: ${currentSequence.join('')}</div>
-                    </div>
-                `;
+                
+                // Animate countdown bar
+                const fill = document.getElementById('countdownFill');
+                fill.style.width = '100%';
+                setTimeout(() => {
+                    fill.style.transition = `width ${showTime}ms linear`;
+                    fill.style.width = '0%';
+                }, 50);
+                
+                setTimeout(() => {
+                    // Hide number and show input
+                    displayArea.innerHTML = `
+                        <div class="status-text input">Your Turn!</div>
+                        <div class="status-subtext">Enter the ${digits}-digit number</div>
+                    `;
+                    document.getElementById('inputArea').classList.remove('hidden');
+                    document.getElementById('numberInput').focus();
+                }, showTime);
+                
+            }, 600);
+        }
+
+        function handleGameKey(num) {
+            if (!gameActive) return;
+            if (userInput.length < digits) {
+                userInput += num;
+                document.getElementById('numberInput').value = userInput;
             }
-            updateDisplay();
         }
 
-        async function startGame() {
-            gameActive = true;
-            round = 0;
-            score = 0;
-            currentLevel = 3;
-            document.getElementById('startGameBtn').disabled = true;
-            document.getElementById('resultsBox').classList.add('hidden');
-            updateDisplay();
-            nextRound();
+        function handleGameDelete() {
+            if (!gameActive) return;
+            if (userInput.length > 0) {
+                userInput = userInput.slice(0, -1);
+                document.getElementById('numberInput').value = userInput;
+            }
         }
 
-        async function nextRound() {
-            round++;
-            updateDisplay();
-            currentSequence = generateSequence(currentLevel);
+        function handleSubmit() {
+            if (!gameActive || userInput.length === 0) return;
+            
             const displayArea = document.getElementById('displayArea');
-            displayArea.innerHTML = `<div class="message-text">Get ready...</div>`;
-            await sleep(1000);
-            displayArea.innerHTML = `<div class="message-text">Watch carefully!</div>`;
-            await sleep(1000);
-            await showSequence(currentSequence);
-            await sleep(500);
-            showInputArea();
+            document.getElementById('inputArea').classList.add('hidden');
+            
+            if (userInput === currentNumber) {
+                // Correct!
+                displayArea.innerHTML = `
+                    <div class="status-text correct">✓ Correct!</div>
+                    <div class="status-subtext">Get ready for level ${level + 1}</div>
+                `;
+                
+                level++;
+                digits++;
+                updateGameDisplay();
+                
+                setTimeout(() => startRound(), 1200);
+            } else {
+                // Wrong - Game Over
+                displayArea.innerHTML = `
+                    <div class="status-text wrong">✗ Incorrect</div>
+                    <div class="status-subtext">The number was: <strong style="color:#ffd700;">${currentNumber}</strong></div>
+                `;
+                
+                gameOver();
+            }
         }
 
-        function endGame(won) {
+        function gameOver() {
             gameActive = false;
-            document.getElementById('startGameBtn').disabled = false;
+            const finalDigits = digits - 1; // Last successful level
             
             const stats = getStats();
-            const resultsBox = document.getElementById('resultsBox');
-            let html = '<h3>Game Over!</h3>';
+            stats.gamesPlayed++;
+            stats.totalDigits += finalDigits;
+            const isRecord = finalDigits > (stats.bestDigits || 0);
+            if (isRecord) stats.bestDigits = finalDigits;
+            saveStats(stats);
             
-            if (gameMode === 'progressive') {
-                const finalLevel = won ? currentLevel : currentLevel - 1;
-                html += `<div class="result-value">${finalLevel}</div>`;
-                html += `<div class="result-message">Longest Sequence</div>`;
-                html += `<div class="result-message">Score: ${score} points</div>`;
-                if (finalLevel === stats.longestSequence && finalLevel > 0) {
-                    html += `<div class="new-record">🏆 New Personal Record!</div>`;
-                }
-            } else {
-                html += `<div class="result-value">${score}</div>`;
-                html += `<div class="result-message">Total Score</div>`;
-                html += `<div class="result-message">Rounds Completed: ${round}/${maxRounds}</div>`;
-            }
+            recordPlay();
             
-            html += `<div class="result-message" style="color: #ffd700; font-size: 1.3em; margin-top: 20px;">Rating: ${getRating(stats.longestSequence)}</div>`;
-            
-            resultsBox.innerHTML = html;
-            resultsBox.classList.remove('hidden');
+            setTimeout(() => showResults(finalDigits, isRecord), 1500);
         }
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        function showResults(finalDigits, isRecord) {
+            document.getElementById('resultsDigits').textContent = finalDigits;
+            document.getElementById('resultsRating').textContent = 'Rating: ' + getRating(finalDigits);
+            document.getElementById('resultsRecord').classList.toggle('hidden', !isRecord || finalDigits === 0);
+            
+            if (finalDigits >= 10) {
+                document.getElementById('resultsIcon').textContent = '🏆';
+            } else if (finalDigits >= 6) {
+                document.getElementById('resultsIcon').textContent = '⭐';
+            } else {
+                document.getElementById('resultsIcon').textContent = '🔢';
+            }
+            
+            document.getElementById('resultsOverlay').classList.remove('hidden');
+            
+            if (!canUserPlay().canPlay) {
+                setTimeout(() => showRedirectPopup(), 2000);
+            }
         }
 
         // ==================== EVENT LISTENERS ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Login keypad
-            document.querySelectorAll('#pinLoginScreen .pin-key[data-num]').forEach(key => {
-                key.addEventListener('click', () => handleLoginKeyPress(key.dataset.num));
+        document.addEventListener('DOMContentLoaded', () => {
+            // Login PIN keypad
+            document.querySelectorAll('#pinLoginScreen .pin-key[data-num]').forEach(k => {
+                k.addEventListener('click', () => handleLoginKey(k.dataset.num));
             });
-            document.querySelector('#pinLoginScreen .pin-key.delete').addEventListener('click', handleLoginDelete);
-            
-            // Create keypad
-            document.querySelectorAll('#pinCreateScreen .pin-key[data-num]').forEach(key => {
-                key.addEventListener('click', () => handleCreateKeyPress(key.dataset.num));
+            document.querySelector('#pinLoginScreen .pin-key.delete').addEventListener('click', handleLoginDel);
+
+            // Create PIN keypad
+            document.querySelectorAll('#pinCreateScreen .pin-key[data-num]').forEach(k => {
+                k.addEventListener('click', () => handleCreateKey(k.dataset.num));
             });
-            document.querySelector('#pinCreateScreen .pin-key.delete').addEventListener('click', handleCreateDelete);
-            
+            document.querySelector('#pinCreateScreen .pin-key.delete').addEventListener('click', handleCreateDel);
+
             // Toggle links
             document.getElementById('showCreatePin').addEventListener('click', () => {
-                currentPIN = '';
-                confirmPIN = '';
-                isConfirming = false;
-                clearPinMessage('createPinMessage');
+                currentPIN = ''; confirmPIN = ''; isConfirming = false;
                 document.getElementById('createPinTitle').textContent = 'Create PIN';
                 document.getElementById('createPinSubtitle').textContent = 'Choose a 4-digit PIN';
                 updatePinDots('createDot', 0);
+                clearPinMessage('createPinMessage');
                 showScreen('pinCreateScreen');
             });
-            
+
             document.getElementById('showLoginPin').addEventListener('click', () => {
                 currentPIN = '';
+                updatePinDots('dot', 0);
                 clearPinMessage('pinMessage');
+                showScreen('pinLoginScreen');
+            });
+
+            // Dashboard buttons
+            document.getElementById('startPlayingBtn').addEventListener('click', () => {
+                if (!canUserPlay().canPlay) { showRedirectPopup(); return; }
+                startGame();
+            });
+
+            document.getElementById('dashLogoutBtn').addEventListener('click', () => {
+                currentPIN = '';
                 updatePinDots('dot', 0);
                 showScreen('pinLoginScreen');
             });
-            
-            // Mode selector
-            document.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (gameActive) {
-                        alert('Finish current game first!');
-                        return;
-                    }
-                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    gameMode = btn.dataset.mode;
-                });
+
+            // Game keypad
+            document.querySelectorAll('.game-key[data-num]').forEach(k => {
+                k.addEventListener('click', () => handleGameKey(k.dataset.num));
             });
-            
-            // Dashboard buttons
-            document.getElementById('startPlayingBtn').addEventListener('click', () => {
-                showScreen('gameScreen');
-            });
-            
-            document.getElementById('dashLogoutBtn').addEventListener('click', () => {
-                if (confirm('Logout?')) {
-                    logout();
-                    currentPIN = '';
-                    updatePinDots('dot', 0);
-                    clearPinMessage('pinMessage');
-                    showScreen('pinLoginScreen');
-                }
-            });
-            
-            document.getElementById('gameLogoutBtn').addEventListener('click', () => {
+            document.querySelector('.game-key.delete').addEventListener('click', handleGameDelete);
+            document.querySelector('.game-key.submit').addEventListener('click', handleSubmit);
+
+            // Game back button
+            document.getElementById('gameBackBtn').addEventListener('click', () => {
+                gameActive = false;
                 loadDashboard();
             });
-            
-            document.getElementById('startGameBtn').addEventListener('click', startGame);
-            
+
+            // Results buttons
+            document.getElementById('playAgainBtn').addEventListener('click', () => {
+                if (!canUserPlay().canPlay) {
+                    document.getElementById('resultsOverlay').classList.add('hidden');
+                    showRedirectPopup();
+                    return;
+                }
+                startGame();
+            });
+
+            document.getElementById('resultsMenuBtn').addEventListener('click', () => {
+                document.getElementById('resultsOverlay').classList.add('hidden');
+                loadDashboard();
+            });
+
+            // Keyboard support for desktop
+            document.addEventListener('keydown', (e) => {
+                if (!gameActive) return;
+                if (e.key >= '0' && e.key <= '9') {
+                    handleGameKey(e.key);
+                } else if (e.key === 'Backspace') {
+                    handleGameDelete();
+                } else if (e.key === 'Enter') {
+                    handleSubmit();
+                }
+            });
+
             // Initialize
             if (hasPIN()) {
                 showScreen('pinLoginScreen');
